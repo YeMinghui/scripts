@@ -1,0 +1,56 @@
+#!/bin/bash
+set -e
+
+CFGDIR=$HOME/.config/v2p
+SUBSCRIBE=$CFGDIR/v2p.sub
+CFG=$CFGDIR/v2p.conf
+V2RAY_CONF=$CFGDIR/v2ray.conf
+
+[[ -d $CFGDIR ]] || mkdir -p $CFGDIR
+
+if [ ! v2ray >/dev/null 2>&1 ]; then
+    echo "install v2ray command first."
+    echo "\$ [sudo] pacman -S v2ray"
+    exit -1
+fi
+
+if [ ! v2ray-tools >/dev/null 2>&1 ]; then
+    echo "install v2ray-tools based on nodejs first."
+    echo "\$ [sudo] npm i -g v2ray-tools"
+    exit -1
+fi
+
+while getopts "l:utc:" opt; do
+    case $opt in
+        u)
+            curl -s $(cat $SUBSCRIBE) > /tmp/v2p
+            base64 -d </tmp/v2p >$CFG 2>/dev/null
+            ;;
+        l)
+            echo $OPTARG > $SUBSCRIBE
+            ;;
+        t)
+            xargs -P 8 -a $CFG v2ray-tools vmesstest --url | cat -n
+            ;;
+        c)
+            list=($(cat $CFG))
+            url=${list[$((OPTARG-1))]}
+            v2ray-tools vmess2config \
+                --listen 0.0.0.0 \
+                --port 2080 \
+                --url $url \
+                > $V2RAY_CONF
+            pkill v2ray; v2ray -c $V2RAY_CONF >$CFGDIR/v2ray.log 2>&1 &
+            ;;
+        ?)
+            echo "unknow operation."
+            exit -1
+            ;;
+    esac
+done
+
+if [ ! -f $CFG ]; then
+    echo "config your subscribe link."
+    echo "v2p -l URL"
+    exit -1
+fi

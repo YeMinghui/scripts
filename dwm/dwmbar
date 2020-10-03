@@ -1,0 +1,23 @@
+#!/bin/sh
+
+SCRIPTPATH=$HOME/mhc/scripts/dwm
+doExit () {
+    running=false
+    sleep 2s
+    xsetroot -name "$(dwm -v)"
+}
+trap 'doExit' 1 2 3 15
+running=true
+
+while [ "$running" == "true" ]; do
+    VOL=$($SCRIPTPATH/volume)
+    echo $VOL > $SCRIPTPATH/volume.txt
+    sleep 5s
+done &
+
+while [ "$running" == "true" ]; do
+# update content every second
+    VOL=$(< $SCRIPTPATH/volume.txt)
+    xsetroot -name "$VOL $(date '+%T')"
+    sleep 1s
+done

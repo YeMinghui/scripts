@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -f /tmp/setbg.pid ]; then
+	exit 0
+else
+	touch /tmp/setbg.pid
+fi
+while true; do
+	pic=$(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt)
+	feh --bg-fill $pic
+	sleep 1m
+done &

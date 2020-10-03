@@ -1,0 +1,15 @@
+#!/bin/bash
+mac="b8:27:eb:1f:d0:e8"
+mac1="b8:27:eb:4a:85:bd"
+res=`arp -a | uniq | grep $mac | awk '{print $2}' | cut -d'(' -f2 | cut -d')' -f1`
+if [ -z "$res" ]; then
+    res=`arp -a | uniq | grep $mac1 | awk '{print $2}' | cut -d'(' -f2 | cut -d')' -f1`
+fi
+if [ -z "$res" ]; then
+    res=`sudo arp-scan -interface wlan0 --localnet | grep $mac | uniq | awk '{print $1}'`
+fi
+if [ -z "$res" ]; then
+    res=`sudo arp-scan -interface wlan0 --localnet | grep $mac1 | uniq | awk '{print $1}'`
+fi
+echo $res
+

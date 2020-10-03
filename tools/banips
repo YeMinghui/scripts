@@ -1,0 +1,1 @@
+sudo lastb | sed -e '/btmp begins/d' | awk '/./{print}' | awk '{isiponcol3=match($3,/[0-9]{1,3}\./); if(isiponcol3){print $3} else {print $2}}' | sort | uniq -c | sort -rn | awk '{if($1>2){print $2;}}' | xargs -d'\n' -n1 banip

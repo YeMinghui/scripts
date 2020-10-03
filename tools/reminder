@@ -1,0 +1,46 @@
+#!/bin/bash
+tmpfile=/tmp/reminder.pid
+pid=$$
+if [ ! -e $tmpfile ]; then
+    echo $pid > $tmpfile
+else
+    pids=(`pgrep reminder`)
+    for epid in ${pids[*]}
+    do
+        if [ "$(cat $tmpfile)" == "$epid" ]; then
+            exit -1
+        fi
+    done
+    echo $pid > $tmpfile
+fi
+
+#export DISPLAY=:0
+time="\
+10:00 神威域
+11:00 元宝嘉年华
+11:30 膜拜城主
+12:40 谁与争锋
+14:00 神威域
+15:00 元宝嘉年华
+15:15 全民乱斗
+16:00 城主之刃
+16:25 金榜提名
+16:50 多宝使者
+17:30 膜拜城主
+19:00 夺宝奇兵
+19:25 魔族入侵,伽蓝神殿
+21:01 王城危机
+21:25 夜战主城
+22:00 神威域\
+"
+
+while true; do
+    while read line; do
+        yark=`echo $line | cut -d' ' -f1 `
+        now=`date "+%H:%M" -d "1 minutes"`
+        if [ "$now" = "$yark" ]; then
+            notify-send --urgency=normal -i $line; paplay /usr/share/sounds/freedesktop/stereo/complete.oga
+        fi
+    done <<< $time
+    sleep 60
+done

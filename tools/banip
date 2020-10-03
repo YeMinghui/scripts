@@ -1,0 +1,7 @@
+ip=$1
+exts=`sudo iptables --list-rules | grep $ip | grep DROP | wc -l`
+if [ $exts -gt 0 ]; then
+	echo "$ip has been blocked!"
+else
+	sudo iptables -I INPUT -s $ip -j DROP
+fi

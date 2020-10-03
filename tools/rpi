@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ip=`search_pi`
+ssh pi@$ip "$@"

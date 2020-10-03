@@ -1,0 +1,29 @@
+#!/bin/bash
+
+pri=/home/hui/Collect/MyMOK/MOK.key
+pub=/home/hui/Collect/MyMOK/MOK.der
+
+sign_file=/usr/src/linux-headers-$(uname -r)/scripts/sign-file
+
+if [ ! -e $pri ]; then
+    echo "没有私钥"
+    exit -1
+fi
+
+if [ ! -e $pub ]; then
+    echo "没有公钥"
+    exit -1
+fi
+
+if [ ! -e $sign_file ]; then
+    echo "没有签名脚本"
+    exit -1
+fi
+
+echo "要签名的模块有" $@
+
+for ko in "$@"
+do
+    echo "正在签名: " $ko
+    $sign_file sha256 $pri $pub $ko
+done

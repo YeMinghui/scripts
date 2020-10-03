@@ -1,0 +1,17 @@
+#!/bin/bash
+MUTE=$(pamixer --get-mute)
+VOL=$(pamixer --get-volume)
+
+ICON=""
+
+if $MUTE ; then
+    ICON="🔇"
+elif [ $VOL -lt "30" ]; then
+    ICON="🔈"
+elif [ $VOL -lt "60" ]; then
+    ICON="🔉"
+else
+    ICON="🔊"
+fi
+
+printf "$ICON $VOL"

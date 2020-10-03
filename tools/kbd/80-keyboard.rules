@@ -1,0 +1,2 @@
+SUBSYSTEM=="usbmisc", ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="2009", RUN+="/home/hui/mhc/scripts/tools/kbd/setkbd.sh"
+# SUBSYSTEM=="usbmisc", ACTION=="remove", SUBSYSTEMS=="usb", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="2009", RUN+="/home/hui/mhc/scripts/tools/kbd/setkbd.sh"
