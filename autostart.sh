@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./tools/kbd/setkbd.sh &
+#./tools/kbd/setkbd.sh &
 xss-lock i3lock-fancy &
 # ./dwm/dwmbar &
 nm-applet &
@@ -21,6 +21,6 @@ proxy() {
     qv2ray >/dev/null 2>&1 &
 }
 
-proxy &
+# proxy &
 feh --randomize --bg-fill $HOME/Pictures/Wallpapers/
 picom -b

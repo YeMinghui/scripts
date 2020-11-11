@@ -1,0 +1,2 @@
+SUBSYSTEM=="input", ACTION=="add", SUBSYSTEMS=="usb", ATTRS{idVendor}=="18f8", ATTRS{idProduct}=="1286", RUN+="/home/hui/mhc/scripts/tools/touchpad/touchpad-toggle.sh d"
+SUBSYSTEM=="input", ACTION=="remove", SUBSYSTEMS=="usb", ATTRS{idVendor}=="18f8", ATTRS{idProduct}=="1286", RUN+="/home/hui/mhc/scripts/tools/touchpad/touchpad-toggle.sh e"
