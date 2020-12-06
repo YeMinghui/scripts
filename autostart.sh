@@ -22,5 +22,6 @@ proxy() {
 }
 
 # proxy &
-feh --randomize --bg-fill $HOME/Pictures/Wallpapers/
+# feh --randomize --bg-fill $HOME/Pictures/Wallpapers/
+feh --bg-fill $HOME/Pictures/Wallpapers/wallhaven-dg7y23.jpg
 picom -b

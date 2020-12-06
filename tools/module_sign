@@ -3,7 +3,8 @@
 pri=/home/hui/Collect/MyMOK/MOK.key
 pub=/home/hui/Collect/MyMOK/MOK.der
 
-sign_file=/usr/src/linux-headers-$(uname -r)/scripts/sign-file
+#sign_file=/usr/src/linux-headers-$(uname -r)/scripts/sign-file
+sign_file=/usr/src/linux/scripts/sign-file
 
 if [ ! -e $pri ]; then
     echo "没有私钥"
